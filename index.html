@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SSE2RMN5E7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SSE2RMN5E7');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunicado Importante - Asesores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Animación suave para transiciones */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Oculta la barra de desplazamiento en el iframe para que se vea más limpio */
+        iframe {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        iframe::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans text-slate-800 overflow-x-hidden">
+
+    <div id="pantalla1" class="w-full max-w-4xl mx-auto bg-white min-h-screen shadow-2xl flex flex-col fade-in">
+        
+        <header class="bg-[#0f4b81] text-white p-4 md:p-5 text-center sticky top-0 z-10 shadow-md">
+            <h1 class="text-xl font-bold md:text-3xl">Información Relevante del Servicio</h1>
+            <p class="text-blue-200 text-xs md:text-sm mt-1">Por favor, revisa esta información antes de registrar tu asistencia.</p>
+        </header>
+
+        <main class="flex-grow p-2 sm:p-4 md:p-8 flex flex-col items-center justify-center">
+            
+            <img 
+                src="TRASPASO DE ICEFAS SIN RECHAZOS.png" 
+                alt="Infografía: Seguimiento de Trámites" 
+                class="w-full max-w-3xl h-auto md:rounded-lg md:shadow-md md:border border-slate-200"
+                onerror="this.onerror=null; this.src='https://placehold.co/800x1200/f0f4f9/0f4b81?text=Vista+Previa:+Aqui+va+tu+infografia.+Se+vera+bien+al+abrirlo+en+tu+computadora';"
+            >
+
+            <div class="mt-6 mb-8 text-center w-full px-4 max-w-md">
+                <button 
+                    id="btn-registro"
+                    disabled
+                    onclick="mostrarFormulario()" 
+                    class="w-full bg-[#f6b01b] text-[#0f4b81] font-bold py-4 px-6 rounded-xl shadow-lg opacity-50 cursor-not-allowed transition-all duration-300 transform"
+                >
+                    Ir al registro <span id="timer">(Espera 25s)</span>
+                </button>
+                <p class="text-xs text-slate-400 mt-3">Debes permanecer en esta pantalla unos segundos para continuar.</p>
+            </div>
+        </main>
+    </div>
+
+    <div id="pantalla2" class="w-full max-w-4xl mx-auto bg-white h-screen shadow-2xl hidden flex-col fade-in">
+        
+        <header class="bg-[#0f4b81] text-white p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-center z-10 shadow-md flex-shrink-0">
+            <h1 class="text-lg sm:text-xl font-bold mb-2 sm:mb-0 text-center sm:text-left">Registro de Lectura</h1>
+            <button onclick="volverInfografia()" class="text-sm bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition w-full sm:w-auto font-medium">
+                ← Volver a ver la infografía
+            </button>
+        </header>
+
+        <div class="w-full flex justify-center bg-[#f0f4f9] border-b border-slate-200">
+            <img 
+                src="banner_formulario.png" 
+                alt="Banner Mejorando la comunicación" 
+                class="w-full max-w-3xl h-auto md:rounded-t-lg mt-2"
+                onerror="this.style.display='none'; this.parentElement.style.display='none';"
+            >
+        </div>
+
+        <main class="flex-grow w-full relative bg-slate-50 overflow-hidden">
+            <iframe 
+                src="https://docs.google.com/forms/d/e/1FAIpQLScTsJ_cCH3k_WLL8Pj2kDFCHNbuntAwHA7mgopEOA0eysx2Xg/viewform?" 
+                class="absolute top-0 left-0 w-full h-full border-none"
+                title="Formulario de registro">
+                Cargando formulario...
+            </iframe>
+        </main>
+    </div>
+
+    <script>
+        // Configuración del temporizador (en segundos)
+        let tiempoEspera = 25; 
+        const btn = document.getElementById('btn-registro');
+        const timerSpan = document.getElementById('timer');
+
+        // Función que cuenta los segundos hacia atrás
+        const intervalo = setInterval(() => {
+            tiempoEspera--;
+            if(tiempoEspera > 0) {
+                timerSpan.innerText = `(Espera ${tiempoEspera}s)`;
+            } else {
+                // Cuando termina el tiempo, habilitamos el botón
+                clearInterval(intervalo);
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btn.classList.add('hover:bg-[#ffc13b]', 'hover:scale-105', 'cursor-pointer');
+                timerSpan.innerText = '';
+                btn.innerHTML = 'Ya revisé la información ✓';
+            }
+        }, 1000);
+
+        // Función para cambiar a la pantalla 2
+        function mostrarFormulario() {
+            document.getElementById('pantalla1').classList.add('hidden');
+            document.getElementById('pantalla1').classList.remove('flex');
+            
+            document.getElementById('pantalla2').classList.remove('hidden');
+            document.getElementById('pantalla2').classList.add('flex');
+            
+            window.scrollTo(0, 0); // Sube la pantalla hasta arriba
+        }
+
+        // Función para regresar a la pantalla 1
+        function volverInfografia() {
+            document.getElementById('pantalla2').classList.add('hidden');
+            document.getElementById('pantalla2').classList.remove('flex');
+            
+            document.getElementById('pantalla1').classList.remove('hidden');
+            document.getElementById('pantalla1').classList.add('flex');
+            
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
